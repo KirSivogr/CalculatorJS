@@ -450,6 +450,7 @@ clear.addEventListener('click', () => {
     firstValue = '';
     sign = '';
     secondValue = '';
+    setDefoultStyleForAll(minus, plus, divide, multiplication);
 });
 
 
@@ -469,12 +470,14 @@ clearElement.addEventListener('click', () => {
 plus.addEventListener('click', () => {
     if (sign === '') {
         if (firstValue) {
+            setDefoultStyleForThird(minus, divide, multiplication, plus);
             sign = '+';
         }
     }
     else if (sign === '+') {
         if (secondValue !== '' && parseFloat(firstValue) !== 'NaN' && parseFloat(secondValue) !== 'NaN') {
             main.innerHTML = '';
+            setDefoultStyleForThird(plus, divide, multiplication, minus);
             if (String(parseFloat(firstValue) + parseFloat(secondValue)).length <= 12) {
                 main.textContent += parseFloat(firstValue) + parseFloat(secondValue);
                 firstValue = `${parseFloat(firstValue) + parseFloat(secondValue)}`;
@@ -489,6 +492,7 @@ plus.addEventListener('click', () => {
     }
     else {
         if (parseFloat(firstValue) && parseFloat(secondValue)) {
+            setDefoultStyleForThird(minus, divide, multiplication, plus);
             if (sign === '-') {
                 main.innerHTML = '';
                 if (String(parseFloat(firstValue) - parseFloat(secondValue)).length <= 12) {
@@ -533,6 +537,7 @@ plus.addEventListener('click', () => {
             } 
         }
         else {
+            setDefoultStyleForThird(minus, divide, multiplication, plus);
             sign = '+';
         }
     }
@@ -542,6 +547,7 @@ minus.addEventListener('click', () => {
     if (sign === '') {
         if (firstValue !== '') {
             sign = '-';
+            setDefoultStyleForThird(plus, divide, multiplication, minus);
         }
         else {
             firstValue += '-';
@@ -550,22 +556,31 @@ minus.addEventListener('click', () => {
         }
     }
     else if (sign === '-') {
-        if (secondValue !== '' && parseFloat(firstValue) !== 'NaN' && parseFloat(secondValue) !== 'NaN') {
+        if (secondValue === '') {
+            secondValue = '-';
             main.innerHTML = '';
-            if (String(parseFloat(firstValue) - parseFloat(secondValue)).length <= 12) {
-                main.textContent += parseFloat(firstValue) - parseFloat(secondValue);
-                firstValue = `${parseFloat(firstValue) - parseFloat(secondValue)}`;
-                secondValue = '';
-            }
-            else {
-                main.textContent += (parseFloat(firstValue) - parseFloat(secondValue)).toExponential(3);
-                firstValue = `${parseFloat(firstValue) - parseFloat(secondValue).toExponential(3)}`;
-                secondValue = '';
-            }
+            main.textContent += secondValue;
         }
+        else {
+            setDefoultStyleForThird(plus, divide, multiplication, minus);
+            if (secondValue !== '' && parseFloat(firstValue) !== 'NaN' && parseFloat(secondValue) !== 'NaN') {
+                main.innerHTML = '';
+                if (String(parseFloat(firstValue) - parseFloat(secondValue)).length <= 12) {
+                    main.textContent += parseFloat(firstValue) - parseFloat(secondValue);
+                    firstValue = `${parseFloat(firstValue) - parseFloat(secondValue)}`;
+                    secondValue = '';
+                }
+                else {
+                    main.textContent += (parseFloat(firstValue) - parseFloat(secondValue)).toExponential(3);
+                    firstValue = `${parseFloat(firstValue) - parseFloat(secondValue).toExponential(3)}`;
+                    secondValue = '';
+                }
+            }
+        }     
     }
     else {
         if (parseFloat(firstValue) && parseFloat(secondValue)) {
+            setDefoultStyleForThird(plus, divide, multiplication, minus);
             if (sign === '+') {
                 main.innerHTML = '';
                 if (String(parseFloat(firstValue) + parseFloat(secondValue)).length <= 12) {
@@ -611,7 +626,15 @@ minus.addEventListener('click', () => {
            
         }
         else {
-            sign = '-';
+            if (secondValue === '') {
+                secondValue = '-';
+                main.innerHTML = '';
+                main.textContent += secondValue;
+            }
+            else {
+                setDefoultStyleForThird(plus, divide, multiplication, minus);
+                sign = '-';
+            }
         }
     }
 });
@@ -619,11 +642,13 @@ minus.addEventListener('click', () => {
 divide.addEventListener('click', () => {
     if (sign === '') {
         if (firstValue) {
+            setDefoultStyleForThird(plus, minus, multiplication, divide);
             sign = '/';
         }
     }
     else if (sign === '/') {
         if (secondValue !== '' && parseFloat(firstValue) !== 'NaN' && parseFloat(secondValue) !== 'NaN') {
+            setDefoultStyleForThird(plus, minus, multiplication, divide);
             main.innerHTML = '';
             if (String(parseFloat(firstValue) / parseFloat(secondValue)).length <= 12) {
                 main.textContent += parseFloat(firstValue) / parseFloat(secondValue);
@@ -640,6 +665,7 @@ divide.addEventListener('click', () => {
     }
     else {
         if (parseFloat(firstValue) && parseFloat(secondValue)) {
+            setDefoultStyleForThird(plus, minus, multiplication, divide);
             if (sign === '+') {
                 main.innerHTML = '';
                 if (String(parseFloat(firstValue) + parseFloat(secondValue)).length <= 12) {
@@ -685,6 +711,7 @@ divide.addEventListener('click', () => {
             
         }
         else {
+            setDefoultStyleForThird(plus, minus, multiplication, divide);
             sign = '/';
         }
     }
@@ -693,11 +720,13 @@ divide.addEventListener('click', () => {
 multiplication.addEventListener('click', () => {
     if (sign === '') {
         if (firstValue) {
+            setDefoultStyleForThird(plus, divide, minus, multiplication);
             sign = '*';
         }
     }
     else if (sign === '*') {
         if (secondValue !== '' && parseFloat(firstValue) !== 'NaN' && parseFloat(secondValue) !== 'NaN') {
+            setDefoultStyleForThird(plus, divide, minus, multiplication);
             main.innerHTML = '';
             if (String(parseFloat(firstValue) * parseFloat(secondValue)).length <= 12) {
                 main.textContent += parseFloat(firstValue) * parseFloat(secondValue);
@@ -714,6 +743,7 @@ multiplication.addEventListener('click', () => {
     }
     else {
         if (parseFloat(firstValue) && parseFloat(secondValue)) {
+            setDefoultStyleForThird(plus, divide, minus, multiplication);
             if (sign === '+') {
                 main.innerHTML = '';
                 if (String(parseFloat(firstValue) + parseFloat(secondValue)).length <= 12) {
@@ -759,6 +789,7 @@ multiplication.addEventListener('click', () => {
             
         }
         else {
+            setDefoultStyleForThird(plus, divide, minus, multiplication);
             sign = '*';
         }
     }
@@ -778,6 +809,7 @@ equal.addEventListener('click', () => {
                 firstValue = `${parseFloat(firstValue) + parseFloat(secondValue).toExponential(3)}`;
                 secondValue = '';
             };
+            setDefoultStyleForAll(minus, plus, multiplication, divide);
             firstValue = '';
             secondValue = '';
             sign = '';
@@ -794,6 +826,7 @@ equal.addEventListener('click', () => {
                 firstValue = `${parseFloat(firstValue) - parseFloat(secondValue).toExponential(3)}`;
                 secondValue = '';
             }
+            setDefoultStyleForAll(minus, plus, multiplication, divide);
             firstValue = '';
             secondValue = '';
             sign = '';
@@ -810,6 +843,7 @@ equal.addEventListener('click', () => {
                 firstValue = `${parseFloat(firstValue) * parseFloat(secondValue).toExponential(3)}`;
                 secondValue = '';
             }
+            setDefoultStyleForAll(minus, plus, multiplication, divide);
             firstValue = '';
             secondValue = '';
             sign = '';
@@ -826,6 +860,7 @@ equal.addEventListener('click', () => {
                 firstValue = `${parseFloat(firstValue) / parseFloat(secondValue).toExponential(3)}`;
                 secondValue = '';
             }
+            setDefoultStyleForAll(minus, plus, multiplication, divide);
             firstValue = '';
             secondValue = '';
             sign = '';
@@ -833,4 +868,24 @@ equal.addEventListener('click', () => {
     }
 });
 
-console.log(parseFloat('-'));
+function setDefoultStyleForAll(f, s, t, fo) {
+    f.style.backgroundColor = '#FD6A00';
+    f.style.color = '#fff';
+    s.style.backgroundColor = '#FD6A00';
+    s.style.color = '#fff';
+    t.style.backgroundColor = '#FD6A00';
+    t.style.color = '#fff';
+    fo.style.backgroundColor = '#FD6A00';
+    fo.style.color = '#fff';
+}
+
+function setDefoultStyleForThird(f, s, t, fo) {
+    f.style.backgroundColor = '#FD6A00';
+    f.style.color = '#fff';
+    s.style.backgroundColor = '#FD6A00';
+    s.style.color = '#fff';
+    t.style.backgroundColor = '#FD6A00';
+    t.style.color = '#fff';
+    fo.style.backgroundColor = '#fff';
+    fo.style.color = '#FD6A00';
+}
